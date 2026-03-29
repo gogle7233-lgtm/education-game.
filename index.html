@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>俄罗斯教育学家 · 思想殿堂 | 中俄教育研学之旅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c2c 0%, #0f2a1f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: #fef9ef;
+            border-radius: 48px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .heritage-header {
+            background: #2d5f3e;
+            background-image: radial-gradient(circle at 20% 30%, rgba(255,235,190,0.15) 2%, transparent 2.5%);
+            background-size: 24px 24px;
+            padding: 18px 20px 14px;
+            text-align: center;
+            border-bottom: 3px solid #f3b33d;
+        }
+
+        .heritage-header h1 {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            color: #fff3cf;
+            text-shadow: 2px 2px 0 #2c5238;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .sub {
+            color: #f9e2a1;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            background: #2d5f3eaa;
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .stats-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2d3e2b;
+            padding: 10px 20px;
+            color: #faf0cf;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 2px solid #f3b33d;
+        }
+
+        .score-box {
+            background: #1e2a1c;
+            padding: 6px 18px;
+            border-radius: 60px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd966;
+            line-height: 1;
+        }
+
+        .level-area {
+            background: #1e2a1c;
+            padding: 6px 18px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .level-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f3b33d;
+            color: #2c3e1f;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+        }
+
+        .vis-progress {
+            width: 160px;
+        }
+
+        .progress-label {
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .progress-bar-bg {
+            background: #3a5533;
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #ffcd7e;
+            width: 0%;
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.3s;
+        }
+
+        .pedagogue-portrait {
+            background: #e8e0cf;
+            margin: 20px 24px 0 24px;
+            border-radius: 48px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #eeddaa;
+        }
+
+        .portrait-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #c2b28b;
+            border: 3px solid #f3b33d;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .portrait-info {
+            flex: 1;
+        }
+
+        .portrait-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #3b2c1f;
+            letter-spacing: 1px;
+        }
+
+        .portrait-slogan {
+            font-size: 0.75rem;
+            color: #6a4c2c;
+            font-style: italic;
+        }
+
+        .quiz-card {
+            padding: 20px 24px 24px;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            background: #e7dcc0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c4b2a;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 24px;
+            color: #2d2b1f;
+            border-left: 5px solid #c2832b;
+            padding-left: 18px;
+        }
+
+        .question-text small {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #5c4b2e;
+            margin-top: 6px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option-btn {
+            background: #fff7e8;
+            border: 2px solid #ddc9a0;
+            border-radius: 60px;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2e2c24;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .option-btn .option-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-btn .option-ru {
+            font-size: 0.75rem;
+            color: #6b5a3e;
+            margin-left: 42px;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #ffefcf;
+            border-color: #c2832b;
+            transform: scale(0.98);
+        }
+
+        .option-prefix {
+            font-weight: 800;
+            background: #b68b40;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            color: white;
+        }
+
+        .feedback-area {
+            margin: 8px 0 16px;
+        }
+
+        .correct-feedback, .wrong-feedback {
+            padding: 12px 16px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            background: #f3f0e2;
+            line-height: 1.4;
+        }
+
+        .correct-feedback {
+            border-left: 6px solid #2e8b57;
+            background: #e0f3e8;
+        }
+
+        .wrong-feedback {
+            border-left: 6px solid #c95a2b;
+            background: #ffe7de;
+        }
+
+        .next-btn {
+            background: #2d5f3e;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 0 #1e402a;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1e402a;
+        }
+
+        .next-btn:disabled {
+            background: #a9b39e;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .restart-btn {
+            background: #b1622c;
+            border: none;
+            padding: 12px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: white;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .result-area {
+            background: #f0e5d2;
+            border-radius: 32px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer {
+            font-size: 0.65rem;
+            text-align: center;
+            background: #2d3e2b;
+            color: #d6cdae;
+            padding: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .pedagogue-portrait {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            .question-text {
+                font-size: 1.1rem;
+            }
+            .stats-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .vis-progress {
+                width: 100%;
+            }
+            .option-btn .option-ru {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameRoot">
+    <div class="heritage-header">
+        <h1>
+            <span>🧠</span> 俄罗斯教育学 · 思想之光 <span>📚</span><br>
+            <span style="font-size:0.9rem;">Российская педагогика · Свет мысли</span>
+        </h1>
+        <div class="sub">乌申斯基 · 马卡连柯 · 苏霍姆林斯基 · 维果茨基 | 真实肖像研学<br>Ушинский · Макаренко · Сухомлинский · Выготский</div>
+    </div>
+
+    <div class="stats-panel">
+        <div class="score-box">
+            <span>🏅 研学积分 / Баллы:</span>
+            <span class="score-value" id="scoreValue">0</span>
+        </div>
+        <div class="level-area">
+            <div class="level-badge" id="levelBadge">
+                <span class="level-icon" id="levelIcon">📖</span>
+                <span class="level-name" id="levelName">初探教育殿堂</span>
+            </div>
+            <div class="vis-progress">
+                <div class="progress-label">
+                    <span>📈 思想进阶 / Прогресс</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-fill" id="levelProgressFill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pedagogue-portrait" id="portraitArea">
+        <img id="educatorImage" class="portrait-img" alt="教育家肖像" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Konstantin_Ushinsky_%281870%29.jpg/200px-Konstantin_Ushinsky_%281870%29.jpg">
+        <div class="portrait-info">
+            <div class="portrait-name" id="educatorName">康斯坦丁·乌申斯基</div>
+            <div class="portrait-slogan" id="educatorSlogan">“教育应扎根于民族文化”</div>
+        </div>
+    </div>
+
+    <div class="quiz-card" id="quizPanel">
+        <div class="question-header">
+            <span>📖 俄罗斯教育学经典问答 / Вопросы по педагогике</span>
+            <span id="questionCounter">第1 / 10题</span>
+        </div>
+        <div class="question-text" id="questionText">
+            加载教育思想...
+        </div>
+        <div class="options-list" id="optionsContainer"></div>
+        <div id="feedbackArea" class="feedback-area"></div>
+        <button class="next-btn" id="nextBtn" disabled>▶ 下一篇章 / Следующий вопрос</button>
+        <button class="restart-btn" id="restartBtn">🔄 重走教育者之路 / Начать заново</button>
+    </div>
+    <footer>
+        🇷🇺 俄罗斯教育遗产 · 专为中国学子定制 | 中俄双语 | 真实教育家肖像·人本·集体·发展区理论
+    </footer>
+</div>
+
+<script>
+    // ---------- 教育学家数据 (中俄双语) ----------
+    const PEDAGOGUES = {
+        ushinsky: {
+            name: "康斯坦丁·乌申斯基 (К.Д. Ушинский)",
+            photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Konstantin_Ushinsky_%281870%29.jpg/200px-Konstantin_Ushinsky_%281870%29.jpg",
+            slogan: "科学教育学奠基人 · 民族性原则 | Основоположник научной педагогики · принцип народности",
+            core: "教育必须依靠民族文化，以母语教学，连接生活。 Воспитание должно опираться на культуру народа."
+        },
+        makarenko: {
+            name: "安东·马卡连柯 (А.С. Макаренко)",
+            photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Anton_Makarenko_1938.jpg/200px-Anton_Makarenko_1938.jpg",
+            slogan: "集体教育 · 纪律与劳动塑造人格 | Воспитание в коллективе · дисциплина и труд",
+            core: "集体是教育的核心，在集体中培养责任感。 Коллектив формирует личность."
+        },
+        sukhomlinsky: {
+            name: "瓦西里·苏霍姆林斯基 (В.А. Сухомлинский)",
+            photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Sukhomlynsky.jpg/200px-Sukhomlynsky.jpg",
+            slogan: "人本主义教育 · 每个孩子都是独特个体 | Гуманистическая педагогика · внимание к личности ребёнка",
+            core: "没有抽象的孩子，只有鲜活的个性，用爱与尊重育人。 Нет абстрактного ребёнка — есть личность."
+        },
+        vygotsky: {
+            name: "列夫·维果茨基 (Л.С. Выготский)",
+            photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Vygotsky_%28cropped%29.jpg/200px-Vygotsky_%28cropped%29.jpg",
+            slogan: "文化历史理论 · 最近发展区 | Культурно-историческая теория · зона ближайшего развития",
+            core: "教学引领发展，学习发生在社会互动之中。 Обучение ведёт за собой развитие."
+        }
+    };
+
+    // ---------- 题库 (中俄双语，每题文本+选项+解释) ----------
+    const QUESTION_SET = [
+        {
+            text: "哪位俄罗斯教育家被誉为“科学教育学奠基人”，并提出了教育必须遵循“民族性原则”？<br><small>Кто из российских педагогов считается основоположником научной педагогики и выдвинул принцип народности?</small>",
+            options: [
+                "苏霍姆林斯基 / Сухомлинский",
+                "乌申斯基 / Ушинский",
+                "马卡连柯 / Макаренко",
+                "维果茨基 / Выготский"
+            ],
+            correct: 1,
+            pedagogueKey: "ushinsky",
+            explanation: "✅ 康斯坦丁·乌申斯基是俄国科学教育学的奠基人，强调教育应扎根于民族文化、母语教学，并与生活紧密相连。<br>📖 Константин Ушинский — основоположник научной педагогики в России, подчёркивал связь образования с народной культурой и родным языком."
+        },
+        {
+            text: "“集体教育”思想是以下哪位教育家的核心主张？他主张在集体中培养纪律、责任和劳动习惯。<br><small>Кому принадлежит идея «воспитание в коллективе» с акцентом на дисциплину, ответственность и труд?</small>",
+            options: [
+                "乌申斯基 / Ушинский",
+                "维果茨基 / Выготский",
+                "马卡连柯 / Макаренко",
+                "苏霍姆林斯基 / Сухомлинский"
+            ],
+            correct: 2,
+            pedagogueKey: "makarenko",
+            explanation: "📖 安东·马卡连柯通过高尔基工学团实践，提出集体是教育的主要工具，纪律与劳动塑造人格。<br>🏭 Антон Макаренко на практике доказал, что коллектив — главное средство воспитания, дисциплина и труд формируют личность."
+        },
+        {
+            text: "“最近发展区”（зона ближайшего развития）理论深刻影响了现代教育心理学，它出自哪位教育学家？<br><small>Кто разработал теорию «зоны ближайшего развития», оказавшую большое влияние на педагогическую психологию?</small>",
+            options: [
+                "乌申斯基 / Ушинский",
+                "维果茨基 / Выготский",
+                "马卡连柯 / Макаренко",
+                "苏霍姆林斯基 / Сухомлинский"
+            ],
+            correct: 1,
+            pedagogueKey: "vygotsky",
+            explanation: "🧠 维果茨基的文化历史理论强调，教学应走在发展的前面，借助成人或同伴帮助到达潜在发展水平。<br>🚀 Выготский утверждал, что обучение должно опережать развитие и создавать зону ближайшего развития."
+        },
+        {
+            text: "苏霍姆林斯基在帕夫雷什中学践行“人本主义教育”，他认为教育的核心是？<br><small>В чём Сухомлинский видел ядро гуманистического воспитания?</small>",
+            options: [
+                "严格纪律与惩罚 / Строгая дисциплина и наказания",
+                "关注每个孩子的个性与心灵 / Внимание к личности и душе каждого ребёнка",
+                "仅重视知识传授 / Только передача знаний",
+                "集体竞赛 / Коллективное соревнование"
+            ],
+            correct: 1,
+            pedagogueKey: "sukhomlinsky",
+            explanation: "🌻 苏霍姆林斯基提出“没有抽象的孩子”，主张通过爱与善良、尊重个体差异来培养全面发展的人。<br>💖 Сухомлинский говорил: «Нет абстрактного ребёнка», призывал воспитывать через доброту и уважение."
+        },
+        {
+            text: "乌申斯基的代表作《人是教育的对象》强调教育要结合心理学、生理学与民族传统。以下哪项符合他的理念？<br><small>Какое утверждение соответствует идеям Ушинского из его труда «Человек как предмет воспитания»?</small>",
+            options: [
+                "教育应与民族文化相脱离 / Образование должно быть оторвано от культуры народа",
+                "教学必须使用母语，基于民族生活 / Обучение должно вестись на родном языке и опираться на народную жизнь",
+                "儿童天生无需教育 / Ребёнок от природы не нуждается в воспитании",
+                "只有古典教育才重要 / Важно только классическое образование"
+            ],
+            correct: 1,
+            pedagogueKey: "ushinsky",
+            explanation: "📚 乌申斯基认为教育应当以本民族语言和文化为基础，才能使教育真正深入心灵。<br>📖 Ушинский считал, что образование должно основываться на родном языке и культуре народа."
+        },
+        {
+            text: "马卡连柯的名言“尽可能多地要求一个人，也尽可能多地尊重一个人”体现了哪种教育原则？<br><small>Какой принцип воспитания отражает знаменитая фраза Макаренко: «Как можно больше требования к человеку, как можно больше уважения к нему»?</small>",
+            options: [
+                "自由放任 / Свободное воспитание",
+                "严格纪律与尊重的统一 / Единство строгой дисциплины и уважения",
+                "惩罚至上 / Приоритет наказания",
+                "儿童中心主义 / Детоцентризм"
+            ],
+            correct: 1,
+            pedagogueKey: "makarenko",
+            explanation: "⚖️ 马卡连柯主张在集体中建立合理的纪律，同时给予人格尊重，这是集体教育的辩证法。<br>🤝 Макаренко сочетал высокую требовательность с глубоким уважением к личности воспитанника."
+        },
+        {
+            text: "维果茨基认为儿童的发展首先发生在社会交往中，然后内化为心理机能。这一理论被称为？<br><small>Как называется теория Выготского, согласно которой развитие сначала происходит в общении, затем становится внутренним?</small>",
+            options: [
+                "认知发展理论 / Теория когнитивного развития",
+                "文化历史理论 / Культурно-историческая теория",
+                "操作条件反射 / Оперантное обусловливание",
+                "社会学习理论 / Теория социального научения"
+            ],
+            correct: 1,
+            pedagogueKey: "vygotsky",
+            explanation: "🌐 维果茨基的文化历史理论指出，高级心理机能起源于社会互动，通过语言等工具内化。<br>🧠 Выготский показал, что высшие психические функции возникают из социального взаимодействия и интериоризируются."
+        },
+        {
+            text: "苏霍姆林斯基强调“教育首先是关心人”，他倡导通过什么途径培养孩子的道德感？<br><small>Какой путь воспитания нравственности у детей предлагал Сухомлинский?</small>",
+            options: [
+                "体罚与训斥 / Телесные наказания и окрики",
+                "自然惩罚 / Естественные последствия",
+                "善与美的体验、劳动和集体情感 / Переживание добра и красоты, труд, коллективные чувства",
+                "单纯知识竞赛 / Только интеллектуальные соревнования"
+            ],
+            correct: 2,
+            pedagogueKey: "sukhomlinsky",
+            explanation: "💖 苏霍姆林斯基认为教育应当通过欣赏自然、艺术、劳动及人与人之间的善意来培养道德。<br>🌸 Сухомлинский воспитывал через красоту природы, искусство, добрые чувства и совместный труд."
+        },
+        {
+            text: "以下哪位教育学家提出了“教学应当走在发展的前面”，并区分了“现有发展水平”和“潜在发展水平”？<br><small>Кто ввёл понятия «актуальный уровень развития» и «зона ближайшего развития» и утверждал, что обучение ведёт за собой развитие?</small>",
+            options: [
+                "皮亚杰 / Пиаже",
+                "乌申斯基 / Ушинский",
+                "维果茨基 / Выготский",
+                "杜威 / Дьюи"
+            ],
+            correct: 2,
+            pedagogueKey: "vygotsky",
+            explanation: "🚀 维果茨基的最近发展区理论强调，教学要创造最近发展区，激发尚未成熟的心理功能。<br>📈 Выготский: обучение должно ориентироваться на «завтрашний день» развития, создавая зону ближайшего развития."
+        },
+        {
+            text: "俄罗斯教育史上，“劳动教育”和“集体主义”相结合的教育模式主要由哪位教育学家通过教育实践系统确立？<br><small>Кто на практике создал систему воспитания, сочетающую трудовое воспитание и коллективизм?</small>",
+            options: [
+                "苏霍姆林斯基 / Сухомлинский",
+                "乌申斯基 / Ушинский",
+                "马卡连柯 / Макаренко",
+                "克鲁普斯卡娅 / Крупская"
+            ],
+            correct: 2,
+            pedagogueKey: "makarenko",
+            explanation: "🏭 马卡连柯在工学团中推行劳动与集体结合，使流浪儿童成为有纪律、有责任的建设者。<br>🔧 Макаренко соединил производительный труд с жизнью коллектива, перевоспитывая беспризорников."
+        }
+    ];
+
+    // 游戏状态
+    let currentQuestionIndex = 0;
+    let totalScore = 0;
+    let answered = false;
+    let totalQuestions = QUESTION_SET.length;
+
+    // DOM 元素
+    const scoreSpan = document.getElementById('scoreValue');
+    const levelNameSpan = document.getElementById('levelName');
+    const levelIconSpan = document.getElementById('levelIcon');
+    const progressFill = document.getElementById('levelProgressFill');
+    const progressPercentSpan = document.getElementById('progressPercent');
+    const questionTextDiv = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackArea = document.getElementById('feedbackArea');
+    const nextBtn = document.getElementById('nextBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const questionCounterSpan = document.getElementById('questionCounter');
+    const educatorImage = document.getElementById('educatorImage');
+    const educatorNameSpan = document.getElementById('educatorName');
+    const educatorSloganSpan = document.getElementById('educatorSlogan');
+
+    const LEVELS = [
+        { min: 0, max: 30, name: "初探教育殿堂 / Начальный", icon: "🌱", desc: "开始触摸教育智慧" },
+        { min: 31, max: 60, name: "集体教育学徒 / Коллективный", icon: "👥", desc: "领悟集体与纪律" },
+        { min: 61, max: 80, name: "人本主义行者 / Гуманист", icon: "❤️", desc: "关怀每一个灵魂" },
+        { min: 81, max: 100, name: "文化历史大师 / Мастер", icon: "🧭", desc: "登顶教育学高峰" }
+    ];
+
+    function getCurrentLevel(score) {
+        for (let i = 0; i < LEVELS.length; i++) {
+            if (score >= LEVELS[i].min && score <= LEVELS[i].max) return LEVELS[i];
+        }
+        return LEVELS[LEVELS.length-1];
+    }
+
+    function updateStatsAndVisual() {
+        scoreSpan.innerText = totalScore;
+        const level = getCurrentLevel(totalScore);
+        levelNameSpan.innerText = level.name;
+        levelIconSpan.innerText = level.icon;
+        let min = level.min, max = level.max;
+        let percent = 0;
+        if (max > min) percent = Math.min(100, ((totalScore - min) / (max - min)) * 100);
+        else percent = 100;
+        if (totalScore >= 100) percent = 100;
+        progressFill.style.width = percent + "%";
+        progressPercentSpan.innerText = Math.floor(percent) + "%";
+    }
+
+    function updatePortrait(pedagogueKey) {
+        const pedagogue = PEDAGOGUES[pedagogueKey];
+        if (pedagogue) {
+            educatorImage.src = pedagogue.photo;
+            educatorImage.onerror = function() { this.src = 'https://via.placeholder.com/80?text=Педагог'; };
+            educatorNameSpan.innerText = pedagogue.name;
+            educatorSloganSpan.innerText = pedagogue.slogan + " | " + pedagogue.core;
+        } else {
+            educatorImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Konstantin_Ushinsky_%281870%29.jpg/200px-Konstantin_Ushinsky_%281870%29.jpg';
+            educatorNameSpan.innerText = "俄罗斯教育学家 / Российский педагог";
+            educatorSloganSpan.innerText = "思想照亮育人之路 / Свет педагогической мысли";
+        }
+    }
+
+    function loadCurrentQuestion() {
+        answered = false;
+        const qData = QUESTION_SET[currentQuestionIndex];
+        if (!qData) return;
+        updatePortrait(qData.pedagogueKey);
+        questionTextDiv.innerHTML = qData.text;
+        optionsContainer.innerHTML = '';
+        qData.options.forEach((opt, idx) => {
+            const btn = document.createElement('div');
+            btn.className = 'option-btn';
+            const prefix = String.fromCharCode(65+idx);
+            // 分离中文和俄语部分（用 / 分割）
+            let parts = opt.split(' / ');
+            let chinesePart = parts[0];
+            let russianPart = parts.length > 1 ? parts[1] : '';
+            btn.innerHTML = `
+                <div class="option-main">
+                    <span class="option-prefix">${prefix}</span>
+                    <span>${chinesePart}</span>
+                </div>
+                ${russianPart ? `<div class="option-ru">${russianPart}</div>` : ''}
+            `;
+            btn.addEventListener('click', () => {
+                if (answered) return;
+                handleAnswer(idx, qData);
+            });
+            optionsContainer.appendChild(btn);
+        });
+        feedbackArea.innerHTML = '';
+        nextBtn.disabled = true;
+        questionCounterSpan.innerText = `第${currentQuestionIndex+1} / ${totalQuestions}题 | Вопрос ${currentQuestionIndex+1} из ${totalQuestions}`;
+    }
+
+    function handleAnswer(selectedIdx, qData) {
+        if (answered) return;
+        answered = true;
+        const isCorrect = (selectedIdx === qData.correct);
+        if (isCorrect) {
+            totalScore += 10;
+            if (totalScore > 100) totalScore = 100;
+            updateStatsAndVisual();
+        }
+        const correctAnswerText = qData.options[qData.correct];
+        let feedbackHtml = '';
+        if (isCorrect) {
+            feedbackHtml = `<div class="correct-feedback">✅ 回答正确！ +10研学积分 / Правильно! +10 баллов<br>📖 ${qData.explanation}</div>`;
+        } else {
+            feedbackHtml = `<div class="wrong-feedback">❌ 回答错误。正确答案是 “${correctAnswerText}”。<br>📖 ${qData.explanation}</div>`;
+        }
+        feedbackArea.innerHTML = feedbackHtml;
+
+        const allOpts = document.querySelectorAll('.option-btn');
+        allOpts.forEach((btn, idx) => {
+            btn.style.pointerEvents = 'none';
+            if (idx === qData.correct) {
+                btn.style.border = '3px solid #2e8b57';
+                btn.style.backgroundColor = '#dcf5e8';
+            }
+            if (idx === selectedIdx && idx !== qData.correct) {
+                btn.style.border = '3px solid #c95a2b';
+                btn.style.backgroundColor = '#ffe0cf';
+            }
+        });
+        nextBtn.disabled = false;
+    }
+
+    function goToNextQuestion() {
+        if (!answered) return;
+        if (currentQuestionIndex + 1 < totalQuestions) {
+            currentQuestionIndex++;
+            loadCurrentQuestion();
+        } else {
+            finishGame();
+        }
+    }
+
+    function finishGame() {
+        const level = getCurrentLevel(totalScore);
+        const allOpts = document.querySelectorAll('.option-btn');
+        allOpts.forEach(btn => btn.style.pointerEvents = 'none');
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = '0.6';
+        nextBtn.innerText = '🏁 研学圆满 / Завершено';
+        let medal = level.icon;
+        let finalMsg = `
+            <div class="result-area" id="finalResultContainer">
+                <h3>🎉 教育学探索之旅完成 / Путешествие завершено 🎉</h3>
+                <p style="font-size:1.2rem; font-weight:bold;">${medal} ${level.name}</p>
+                <p>🏅 总积分 / Итоговые баллы: ${totalScore} / 100</p>
+                <p>✨ ${level.desc} ✨<br>你已深刻领悟乌申斯基、马卡连柯、苏霍姆林斯基、维果茨基的教育智慧。<br>Вы изучили идеи Ушинского, Макаренко, Сухомлинского и Выготского.</p>
+                <button class="restart-btn" id="finalRestartBtn" style="background:#b1622c; margin-top:10px;">📖 开启新的教育研学 / Начать заново</button>
+            </div>
+        `;
+        if (!document.getElementById('finalResultContainer')) {
+            const resultDiv = document.createElement('div');
+            resultDiv.id = 'finalResultContainer';
+            resultDiv.innerHTML = finalMsg;
+            document.querySelector('.quiz-card').appendChild(resultDiv);
+            const finalRestart = document.getElementById('finalRestartBtn');
+            if (finalRestart) finalRestart.addEventListener('click', () => resetGame());
+        }
+    }
+
+    function resetGame() {
+        currentQuestionIndex = 0;
+        totalScore = 0;
+        answered = false;
+        updateStatsAndVisual();
+        const finalDiv = document.getElementById('finalResultContainer');
+        if (finalDiv) finalDiv.remove();
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = '1';
+        nextBtn.innerText = '▶ 下一篇章 / Следующий вопрос';
+        loadCurrentQuestion();
+        const allOpts = document.querySelectorAll('.option-btn');
+        allOpts.forEach(btn => {
+            btn.style.pointerEvents = '';
+            btn.style.border = '';
+            btn.style.backgroundColor = '';
+        });
+        feedbackArea.innerHTML = '';
+    }
+
+    nextBtn.addEventListener('click', goToNextQuestion);
+    restartBtn.addEventListener('click', resetGame);
+
+    function init() {
+        totalScore = 0;
+        currentQuestionIndex = 0;
+        updateStatsAndVisual();
+        loadCurrentQuestion();
+    }
+    init();
+</script>
+</body>
+</html>
